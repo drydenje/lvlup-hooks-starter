@@ -7,7 +7,7 @@ import React, {
 } from "react";
 
 import Toggle from "./Toggle";
-import Counter from "./Counter";
+// import Counter from "./Counter";
 
 import { useTitleInput } from "./hooks/useTitleInput";
 
@@ -19,7 +19,6 @@ const App = () => {
   const [dishes, setDishes] = useState([]);
 
   const fetchDishes = async () => {
-    console.log("ran");
     const res = await fetch(
       "https://my-json-server.typicode.com/leveluptuts/fakeapi/dishes"
     );
@@ -38,9 +37,7 @@ const App = () => {
       .reverse()
       .join("");
   };
-
   const title = "Level Up Dishes";
-
   const TitleReversed = useMemo(() => reverseWord(title), [title]);
 
   return (
@@ -68,12 +65,12 @@ const App = () => {
           <button>Submit</button>
         </form>
         {dishes.map(dish => (
-          <article className="dish-card dish-card--withImage">
+          <article className="dish-card dish-card--withImage" key={dish.name}>
             <h3>{dish.name}</h3>
             <p>{dish.desc}</p>
             <div className="ingredients">
               {dish.ingredients.map(ingredient => (
-                <span>{ingredient}</span>
+                <span key={ingredient}>{ingredient}</span>
               ))}
             </div>
           </article>
