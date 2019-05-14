@@ -1,5 +1,7 @@
 # Levelup Tutorials - React Hooks for everyone
 
+## [https://usehooks.com/]
+
 ## useState
 
 - can be used to access state from a functional component.
@@ -153,4 +155,50 @@
         return [value, setValue];
       }
 
-##
+## Using useEffect to fetch and control data
+
+- create an async function outside of useEffect
+- call the function inside useEffect
+- pass a second parameter to useEffect within [], and if this parameter changes a re-render will be triggered and the function will run again
+
+      import { useState, useEffect } from 'react';
+
+      const App = () => {
+        const [name, setName] = useTitleInput("");
+        const [dishes, setDishes] = useState([]);
+
+        const fetchDishes = async () => {
+          const res = await fetch("https://my-json-server.typicode.com/leveluptuts/fakeapi/dishes");
+          const data = await res.json();
+          setDishes(data);
+        }
+
+        useEffect(() => {
+          fetchDishes();
+
+        }, [name]); // if name changes, re-render and call fetchDishes
+
+        return (
+              <div>
+                <form onSubmit={e => { e.preventDefault();}>
+                  <input
+                    type="text"
+                    onChange={e => setName(e.target.value)}
+                    value={name}
+                  />
+                  <button>Submit</button>
+                </form>
+                {dishes.map(dish => (
+                  <article className="dish-card dish-card--withImage">
+                    <h3>{dish.name}</h3>
+                    <p>{dish.desc}</p>
+                    <div className="ingredients">
+                      {dish.ingredients.map(ingredient => (
+                        <span>{ingredient}</span>
+                      ))}
+                    </div>
+                  </article>
+            ))}
+          </div>
+        )
+      }

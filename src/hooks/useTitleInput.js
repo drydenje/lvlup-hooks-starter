@@ -7,7 +7,7 @@ function useTitleInput(initialValue) {
     document.title = value;
   });
 
-  useDebugValue(value.length > 0 ? 'Full' : 'Empty');
+  useDebugValue(value.length > 0 ? "Full" : "Empty");
 
   return [value, setValue];
 }
